@@ -6,16 +6,28 @@ const server = http.createServer((req, res) => {
     try {
       const parsedUrl = url.parse(req.url, true);
       const searchParams = parsedUrl.query;
-      const firstName = searchParams.firstname || "Guest";
-      const lastName = searchParams.lastname || "Tseug";
 
-      const fullName = `${firstName} ${lastName}`;
+      const width = searchParams.width || '96';
+      const height = searchParams.height || '96';
+
+      const svgWidth = parseInt(width) || 96;
+      const svgHeight = parseInt(height) || 96;
+
+      const customText = `${svgWidth}x${svgHeight}`;
+      const fontSize = Math.max(10, svgHeight * 0.1);
+
+      const svgContent = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
+          <rect width="${svgWidth}" height="${svgHeight}" fill="#cccccc"></rect>
+          <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="${fontSize}" fill="#333333">${customText}</text>
+        </svg>
+      `.trim();
 
       res.writeHead(200, {
         'Content-Type': 'text/plain',
         'Cache-Control': 'no-cache',
       });
-      res.end(`Hello ${fullName}`);
+      res.end(svgContent);
     } catch (error) {
       console.error('Error:', error);
       res.writeHead(500, { 'Content-Type': 'application/json' });
