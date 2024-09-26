@@ -22,9 +22,9 @@ const server = http.createServer((req, res) => {
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="${fontSize}" fill="#333333">${customText}</text>
         </svg>
       `.trim();
-
+      
       res.writeHead(200, {
-        'Content-Type': 'text/plain',
+        'Content-Type': 'image/svg+xml',
         'Cache-Control': 'no-cache',
       });
       res.end(svgContent);
