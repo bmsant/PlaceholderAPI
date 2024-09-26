@@ -22,12 +22,15 @@ const server = http.createServer((req, res) => {
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="${fontSize}" fill="#333333">${customText}</text>
         </svg>
       `.trim();
+
+      const base64SVG = Buffer.from(svgContent).toString('base64');
+      const base64Image = `data:image/svg+xml;base64,${base64SVG}`;
       
       res.writeHead(200, {
-        'Content-Type': 'image/svg+xml',
+        'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
       });
-      res.end(svgContent);
+      res.end(JSON.stringify({ base64Image }));
     } catch (error) {
       console.error('Error:', error);
       res.writeHead(500, { 'Content-Type': 'application/json' });
