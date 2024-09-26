@@ -1,7 +1,7 @@
 {
   "name": "placeholderapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "Placehold Generator API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
